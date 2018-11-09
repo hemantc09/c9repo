@@ -1,0 +1,32 @@
+<!-- two dots back to the folder its a hierarchy  -->
+<% include ../partials/header %>
+
+<!--to see the user for debugging-->
+<!--<h4> <%= /*currentUser*/ %> </h4>-->
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome to Campground World</h1>
+            <p>View our special hand picked Campgrounds from california!!! </p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="/campgrounds/new">Add a new campground</a>
+            </p>
+        </div>
+    </header>
+
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <%campgrounds.forEach(function(campground){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <img height="200" src="<%= campground.image %>"> 
+                    <div class="caption">
+                         <h4> <%= campground.name %></h4>    
+                     </div>
+                     <div>
+                         <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More Info</a>
+                     </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+  
+<% include ../partials/footer %>

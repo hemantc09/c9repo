@@ -1,0 +1,83 @@
+<!-- two dots is one folder back - just like cd .. -->
+<% include ../partials/header %>
+
+<!--we are dividing page in 3 left col and 9 right col = 12 pane-->
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Campground World</p>
+            <div class="list-group">
+                <li class="list-group-item active">data 1</li>
+                <li class="list-group-item">data 2</li>    
+                <li class="list-group-item">data 2</li>    
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= campground.image %>">
+                <div class="caption-full">
+                    <h4 class="pull-right"> $<%= campground.price %> /night</h4>
+                    <h4><a><%= campground.name %></a></h4>
+                    <p><%= campground.description %></p>
+                    <p>
+                        <em>Submitted by <%= campground.author.username %></em>
+                    </p>
+                    <!--foundCampground.author.id.equals(req.user._id)-->
+                    <!-- if currentUser is there  && then show edit and delete button only if the user is logged in -->
+                    <% if(currentUser && campground.author.id.equals(currentUser._id)) {  
+                    
+                    //console.log("campground is+show- " + campground._id )%> 
+                    
+                        <a class="btn btn-xs btn-warning" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
+                    <!--to delete the campground need to write form to send -->
+                    <!--the request-->
+                    <form class="delete-form" action="/campgrounds/<%= campground._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger">Delete</button>
+                    </form>
+                    <% } %>
+                    
+                </div>
+            </div>
+            <!--change it latter-->
+            <div class="well">
+                <div class="text-right">
+                    <a  class="btn btn-success" href="/campgrounds/<%=campground._id%>/comments/new">
+                      Add a new comment
+                     </a>
+                </div>
+                <hr>
+                <!-- campground is the reference from the found campground
+                comments is the array
+                comment is the temp returned variable to render -->
+                <% campground.comments.forEach(function(comment){ %>
+                    <div class="row">
+                        <!--cover entire page thats why its col 12-->
+                        <div class=col-md-12>
+                            <strong><%= comment.author.username %></strong>
+                            <span class="pull-right">10 days ago</span>
+                             <p>
+                                 <%= comment.text %>
+                            </p>
+                            
+                        
+                        <% if(currentUser && comment.author.id.equals(currentUser._id)) { 
+                         //if comment is own by the current user then show the buttons
+                         //else dont show the button
+                        %> 
+                            <a class="btn btn-xs btn-warning" 
+                                href="/campgrounds/<%= campground._id%>/comments/<%=comment._id %>/edit"> 
+                                Edit 
+                            </a>
+                            <form class="delete-form" action="/campgrounds/<%= campground._id%>/comments/<%=comment._id %>?_method=DELETE" method="POST">
+                                <input type="submit" class="btn btn-xs btn-danger" value="delete">
+                            </form>
+                        <% } %>    
+                        </div>
+                    </div>
+                    <hr>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+    
+<% include ../partials/footer %>  
+

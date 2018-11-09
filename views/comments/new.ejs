@@ -1,0 +1,35 @@
+<% include ../partials/header %>
+
+    <div class="row">
+        <h1 style="text-align:center;"> Add a new comment to <%= campground.name %></h1>
+        <div style="width:40%; margin:30px auto;">
+            <!--do not use inlie styling: above line makes form 30% of apge and center with 0 auto-->
+            <!-- below is the post route to add a new comment form 
+            /campgrounds/:id/comments
+            -->
+            <form action="/campgrounds/<%=campground._id %>/comments" method="POST">
+                <!--Wrap labels and controls in .form-group for optimum spacing.-->
+                <div class="form-group">
+                    <input class="form-control" type="text" name="comment[text]" placeholder="text">    
+                </div>
+                
+                <!-- we are not longer using the author field
+                because the author name is comming from dirctly 
+                when the user is logged in -->
+                
+                <!--<div class="form-group">-->
+                <!--    <input class="form-control" type="text" name="comment[author]" placeholder="author">    -->
+                <!--</div>-->
+                
+                <div class="form-group">
+                    <!--btn-block take full width and btn-primary makes button color blue by default-->
+                    <button class="btn btn-default btn-lg btn-block btn-primary"> Submit</button>    
+                </div>
+                
+                
+            </form>
+            <a href="/campgrounds"> Go back</a>
+        </div>
+    </div>
+
+<% include ../partials/footer %>
